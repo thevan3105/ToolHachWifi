@@ -15,8 +15,10 @@ import sys
 # 	print("thread 1")
 # 	time.sleep(1.5)
 # 	print(bs)
-print("nhap ten wifi:")
+print("Input name wifi:")
 name = input()
+print("Target:", name)
+print("---------------------------------")
 def setup_device():
     global bssid
     global channel
