@@ -15,9 +15,9 @@ import sys
 # 	print("thread 1")
 # 	time.sleep(1.5)
 # 	print(bs)
-print("Input name wifi:")
-name = input()
+name = input("Input name wifi: ")
 print("Target:", name)
+
 print("---------------------------------")
 def setup_device():
     global bssid
@@ -56,7 +56,7 @@ def setup_device():
             channel = l[6]
         print('bssid:',bssid)
         print('channel:',channel)
-        time.sleep(5)
+        # time.sleep(5)
         # exportFile(bssid)
         # complite()
     except:
